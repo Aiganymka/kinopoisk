@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs')%>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/header.ejs')%>
+    <div class="container">
+        <div class="main">
+            <div class="categories">
+                <h3>Жанры</h3>
+                <%
+                    genres.forEach((genre)=>{
+                %>
+                    <a href=""><%=genre.name%></a>
+                <%
+                    })
+                %>
+            </div>
+            <div class="main-content">
+                <h3>Профиль</h3>
+                <div class="profile">
+                    <div class="profile-img">
+                        <img src="/images/profile-img.webp" alt="">
+                    </div>
+                    <div class="profile-info">
+                        <p> 
+                            <span>Полное имя:</span>
+                            <%= user.full_name%>
+                        </p>
+                        <p>
+                            <span>E-mail:</span>
+                            <%= user.email%>
+                        </p>
+                        <%
+                            if( loginUser._id && loginUser._id.toString() === user._id.toString()){
+                        %>
+                            <a class="edit-btn">Редактировать профиль</a>
+                            <a class="logout-btn" href="/api/signout">Выход</a>
+                        <%
+                            }
+                        %>
+                    </div>
+                </div>
+                <h3>Сохраненные фильмы</h3>
+                <% 
+                    if(user.toWatch.length > 0 ){
+                        user.toWatch.forEach(film => {
+                %>                                                                                                                  
+                <div class="main-card">
+                    <div class="card-left">
+                        <div class="film-img">
+                            <img src="<%=film.image%>" alt="">
+                        </div>
+                        <div class="film-info">
+                            <a href=""><%=film.titleRus%></a>
+                            <a href=""><%=film.titleEng%>, <%=film.year%>, <%=film.time%> мин </a>
+                            <a href=""><%=film.country.name%>,<%=film.genre.name%></a>
+                            <button class="film-btn">
+                                <img src="/images/icons/play.svg" alt="">
+                                Смотреть
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-right">
+                        <div class="film-rate">
+                            <p>7.3</p>
+                        </div>
+                        <button class="film-btn " onclick="deleteFromToWatch('<%=film._id%>')">
+                            <img src="/images/icons/saved.png" alt="" class="saved">
+                            Сохранено
+                        </button>
+                    </div>
+                </div>
+                <%
+                        })
+                    }%>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/scripts.ejs')%>
+</body>
+</html>
