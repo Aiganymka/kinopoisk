@@ -16,4 +16,4 @@ npm start
 
 ```
 
-Project will run om http://localhost:8000
+Project will run on http://localhost:8000
